@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "repl_python3_ScraperTest"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+bs4 = "^0.0.1"
+google = "^3.0.0"
+PySimpleGUI = "^4.47.0"
+keyboard = "^0.13.5"
+Pillow = "^8.3.2"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

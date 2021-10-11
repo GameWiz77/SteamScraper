@@ -5,12 +5,18 @@ import PySimpleGUI as sg
 from PIL import Image
 from urllib.request import urlopen
 import time
+import json
+import copy
 
+
+t = 2
 
 themelist = ['Black', 'BlueMono', 'BluePurple', 'BrightColors', 'BrownBlue', 'Dark', 'Dark2', 'DarkAmber', 'DarkBlack', 'DarkBlack1', 'DarkBlue', 'DarkBlue1', 'DarkBlue10', 'DarkBlue11', 'DarkBlue12', 'DarkBlue13', 'DarkBlue14', 'DarkBlue15', 'DarkBlue16', 'DarkBlue17', 'DarkBlue2', 'DarkBlue3', 'DarkBlue4', 'DarkBlue5', 'DarkBlue6', 'DarkBlue7', 'DarkBlue8', 'DarkBlue9', 'DarkBrown', 'DarkBrown1', 'DarkBrown2', 'DarkBrown3', 'DarkBrown4', 'DarkBrown5', 'DarkBrown6', 'DarkGreen', 'DarkGreen1', 'DarkGreen2', 'DarkGreen3', 'DarkGreen4', 'DarkGreen5', 'DarkGreen6', 'DarkGrey', 'DarkGrey1', 'DarkGrey2', 'DarkGrey3', 'DarkGrey4', 'DarkGrey5', 'DarkGrey6', 'DarkGrey7', 'DarkPurple', 'DarkPurple1', 'DarkPurple2', 'DarkPurple3', 'DarkPurple4', 'DarkPurple5', 'DarkPurple6', 'DarkRed', 'DarkRed1', 'DarkRed2', 'DarkTanBlue', 'DarkTeal', 'DarkTeal1', 'DarkTeal10', 'DarkTeal11', 'DarkTeal12', 'DarkTeal2', 'DarkTeal3', 'DarkTeal4', 'DarkTeal5', 'DarkTeal6', 'DarkTeal7', 'DarkTeal8', 'DarkTeal9', 'Default', 'Default1', 'DefaultNoMoreNagging', 'Green', 'GreenMono', 'GreenTan', 'HotDogStand', 'Kayak', 'LightBlue', 'LightBlue1', 'LightBlue2', 'LightBlue3', 'LightBlue4', 'LightBlue5', 'LightBlue6', 'LightBlue7', 'LightBrown', 'LightBrown1', 'LightBrown10', 'LightBrown11', 'LightBrown12', 'LightBrown13', 'LightBrown2', 'LightBrown3', 'LightBrown4', 'LightBrown5', 'LightBrown6', 'LightBrown7', 'LightBrown8', 'LightBrown9', 'LightGray1', 'LightGreen', 'LightGreen1', 'LightGreen10', 'LightGreen2', 'LightGreen3', 'LightGreen4', 'LightGreen5', 'LightGreen6', 'LightGreen7', 'LightGreen8', 'LightGreen9', 'LightGrey', 'LightGrey1', 'LightGrey2', 'LightGrey3', 'LightGrey4', 'LightGrey5', 'LightGrey6', 'LightPurple', 'LightTeal', 'LightYellow', 'Material1', 'Material2', 'NeutralBlue', 'Purple', 'Reddit', 'Reds', 'SandyBeach', 'SystemDefault', 'SystemDefault1', 'SystemDefaultForReal', 'Tan', 'TanBlue', 'TealMono', 'Topanga']
 
 theme = 'DarkGray12'
-layouttheme = [[sg.Listbox(values=themelist, enable_events=True, size=(30, 6), key='list')]]
+
+layoutl = [[sg.Listbox(values=themelist, enable_events=True, size=(30, 6))]]
+windowl = sg.Window('test', layoutl)
 
 menu_def = [['File', ['Open', 'Save', 'Exit',]],
               ['Edit', ['Paste', ['Special', 'Normal',], 'Undo'],],
@@ -25,41 +31,45 @@ layout = [  [sg.Menu(menu_def, key='menu')],
             [sg.Text('Enter Game Title'), sg.InputText(do_not_clear=False, key='title')],
             [sg.Button('Ok', bind_return_key=True), sg.Button('Cancel'),] ]
 
+zayout = copy.deepcopy(layout)
+
+
 # Create the Window
 window = sg.Window('Steam Price Checker', layout)
 
-def HenWindow():
-  t = 0
-  t = t + 1
-  sg.theme(theme)
-  layout[t] = [  [sg.Menu(menu_def, key='menu')],
-  [sg.Text("""Welcome to Steam price checker - 
-    Type the Game Title to begin or
-    Press Quit to Quit""")],
-            [sg.Text('Enter Game Title'), sg.InputText(do_not_clear=False, key='title')],
-            [sg.Button('Ok', bind_return_key=True), sg.Button('Cancel'),] ]
-  window3 = sg.Window('Steam Price Checker', layout[t])
-  event, values = window3.read() 
+zed = ['{', ':', '\"', '0', '[', ']', '}', ' ']
+def dictchange():
+  o = 0
+  newz = zeme
+  while o < 8:
+    newz = newz.replace(zed[o], "")
+    o = o + 1
+    print(newz)
+  print(newz)
+  windowl.close()
+  sg.theme(newz)
+  window.close()
+  windowz = sg.Window('Steam Price Checker', zayout)
+####################update event,values =; event, values is a variable.
 
-event, values = window.read()
+
 while True:
-  if event == 'Theme':
-    window.close()
-    windowtheme = sg.Window('Theme Browser', layouttheme)
-    event, values = windowtheme.read()
-    theme = (values['list'][0])
-    HenWindow()
+  event, values = window.read()
   if event == sg.WIN_CLOSED or event == 'Cancel':
     break
     window.close()
-  if event in themelist:
-    theme = (values['menu'])
-    window.close()
-    HenWindow()
+  if event == ('Theme'):
+    print('test')
+    event, values = windowl.read()
+    print(values)
+    zeme = json.dumps(values)
+    dictchange()
+
     continue
 
   inputurl1 = (values['title'])
-  print(inputurl1)
+
+  print (values['title'])
   if inputurl1 != ("quit") and inputurl1 != ("Open"):
     for url in search(inputurl1 + 'steam', stop=1):
         inputurl = url

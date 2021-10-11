@@ -27,14 +27,16 @@ layout = [[sg.Text("""Welcome to Steam price checker -
 window = sg.Window('Steam Price Checker', layout)
 
 def endgrid():
-  while count < len():
+  while count < len(imagelist): ###########convert count to string and file open to 'count'
     file = open(count, "wb")
     file.write(response.content)
     file.close()
     count = count + 1
     endgrid = [[sg.Image(imagelist[count])],]
     endlayout = sg.Window('Steam Price Checker', endgrid)
-    endlayout.read()
+    event, values = endlayout.read()
+    print('test')
+
 
 
 while True:

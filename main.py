@@ -6,8 +6,11 @@ from PIL import Image
 from urllib.request import urlopen
 import time
 
+count = 0
+t = -1
+imagelist = []
 theme = 'DarkGray12'
-
+inputlist = []
 menu_def = [['File', ['Open', 'Save', 'Exit',]],
               ['Edit', ['Paste', ['Special', 'Normal',], 'Undo'],],
               ['Settings', ['Theme'],]]
@@ -18,42 +21,36 @@ layout = [[sg.Text("""Welcome to Steam price checker -
     Type the Game Title to begin or
     Press Quit to Quit""")],
             [sg.Text('Enter Game Title'), sg.InputText(do_not_clear=False, key='title')],
-            [sg.Button('Ok', bind_return_key=True), sg.Button('Cancel'),] ]
+            [sg.Button('Ok', bind_return_key=True), sg.Button('Cancel'), sg.Button('Previous')] ]
 
 # Create the Window
 window = sg.Window('Steam Price Checker', layout)
 
-def HenWindow():
-  t = 0
-  t = t + 1
-  sg.theme(theme)
-  layout[t] = [  [sg.Menu(menu_def, key='menu')],
-  [sg.Text("""Welcome to Steam price checker - 
-    Type the Game Title to begin or
-    Press Quit to Quit""")],
-            [sg.Text('Enter Game Title'), sg.InputText(do_not_clear=False, key='title')],
-            [sg.Button('Ok', bind_return_key=True), sg.Button('Cancel'),] ]
-  window3 = sg.Window('Steam Price Checker', layout[t])
-  event, values = window3.read() 
+def endgrid():
+  while count < len():
+    file = open(count, "wb")
+    file.write(response.content)
+    file.close()
+    count = count + 1
+    endgrid = [[sg.Image(imagelist[count])],]
+    endlayout = sg.Window('Steam Price Checker', endgrid)
+    endlayout.read()
 
-event, values = window.read()
+
 while True:
-  if event == 'Theme':
-    window.close()
-    windowtheme = sg.Window('Theme Browser', layouttheme)
-    event, values = windowtheme.read()
-    theme = (values['list'][0])
-    HenWindow()
+  event, values = window.read()
   if event == sg.WIN_CLOSED or event == 'Cancel':
+    print(inputlist)
+    print(imagelist)
     break
     window.close()
-  if event in themelist:
-    theme = (values['menu'])
-    window.close()
-    HenWindow()
-    continue
-
-  inputurl1 = (values['title'])
+    endgrid()
+  if event == 'Previous':
+    inputurl1 = inputlist[t]
+  if event == 'Ok':
+    t = t + 1
+    inputurl1 = (values['title'])
+    inputlist.append(inputurl1)
   print(inputurl1)
   if inputurl1 != ("quit") and inputurl1 != ("Open"):
     for url in search(inputurl1 + 'steam', stop=1):
@@ -69,6 +66,7 @@ while True:
         break
     response = requests.get(x)
     print(x)
+    imagelist.append(x)
 
     file = open("sample_image.png", "wb")
     file.write(response.content)

@@ -6,7 +6,7 @@ from PIL import Image
 from urllib.request import urlopen
 import time
 
-count = 0
+
 t = -1
 imagelist = []
 theme = 'DarkGray12'
@@ -27,14 +27,20 @@ layout = [[sg.Text("""Welcome to Steam price checker -
 window = sg.Window('Steam Price Checker', layout)
 
 def endgrid():
-  while count < len(imagelist): ###########convert count to string and file open to 'count'
-    file = open(count, "wb")
-    file.write(response.content)
+  count = 0
+  zount = ''
+  tount = ''    
+  while count < len(inputlist): ###########convert count to string and file open to 'count'
+    tount = requests.get(imagelist[count])
+    print(tount)
+    file = open('zount.png', "wb")
+    file.write(tount.content)
     file.close()
-    count = count + 1
-    endgrid = [[sg.Image(imagelist[count])],]
+    Image.open("zount.png").save("zountz.png")
+    endgrid = [[sg.Image('zountz.png')],]
     endlayout = sg.Window('Steam Price Checker', endgrid)
     event, values = endlayout.read()
+    count = count + 1
     print('test')
 
 
@@ -44,9 +50,9 @@ while True:
   if event == sg.WIN_CLOSED or event == 'Cancel':
     print(inputlist)
     print(imagelist)
-    break
     window.close()
     endgrid()
+    break
   if event == 'Previous':
     inputurl1 = inputlist[t]
   if event == 'Ok':
@@ -70,21 +76,21 @@ while True:
     print(x)
     imagelist.append(x)
 
-    file = open("sample_image.png", "wb")
+    file = open("image1.png", "wb")
     file.write(response.content)
     file.close()
     page = requests.get(tsm)
     soup = BeautifulSoup(page.content, "html.parser")
     try:
       try:
-        results = soup.find(id="game_area_purchase")
-        fesults = soup.find(id="appHubAppName")
-        job_elements = results.find("div", class_="game_purchase_price price")
-        cob_elements = fesults.find("div", class_="apphub_AppName")
-        print(fesults.text, ":", job_elements.text.strip());
-        Image.open("sample_image.png").save("sample1.png")
+        gamearea = soup.find(id="game_area_purchase")
+        gamename = soup.find(id="appHubAppName")
+        gamecost = gamearea.find("div", class_="game_purchase_price price")
+        gamenamewrite = gamename.find("div", class_="apphub_AppName")
+        print(gamename.text, ":", gamecost.text.strip());
+        Image.open("image1.png").save("sample1.png")
         
-        layout2 = [ [sg.Text(fesults.text + ": " + job_elements.text.strip())],
+        layout2 = [ [sg.Text(gamename.text + ": " + gamecost.text.strip())],
                     [sg.Image("sample1.png")],
                     [sg.Button("Close", bind_return_key=True)]]
         window2 = sg.Window('Steam Price Checker', layout2,)
@@ -96,11 +102,11 @@ while True:
 
 
       except AttributeError:
-        result = soup.find(id="game_area_purchase")
-        gesults = soup.find(id="appHubAppName")
-        job_element = result.find("div", class_="discount_final_price")
-        cob_elements = gesults.find("div", class_="apphub_AppName")
-        print(gesults.text, ":", job_element.text.strip());
+        gamearea = soup.find(id="game_area_purchase")
+        gamename = soup.find(id="appHubAppName")
+        gamecost = gamearea.find("div", class_="discount_final_price")
+        gamenamewrite = gamename.find("div", class_="apphub_AppName")
+        print(gamename.text, ":", gamecost.text.strip());
         window.close()
     except:
       print("No game found")

@@ -1,3 +1,4 @@
+#####################Libraries
 import requests
 from bs4 import BeautifulSoup
 from googlesearch import search
@@ -5,28 +6,28 @@ import PySimpleGUI as sg
 from PIL import Image
 from urllib.request import urlopen
 import time
+#####################Libraries
 
 
+#####################Definitions
 t = -1
-imagelist = []
+imagelist = [] 
 theme = 'DarkGray12'
-inputlist = []
+inputlist = [] 
 menu_def = [['File', ['Open', 'Save', 'Exit',]],
               ['Edit', ['Paste', ['Special', 'Normal',], 'Undo'],],
-              ['Settings', ['Theme'],]]
+              ['Settings', ['Theme'],]] #(Deprecated)
 
 sg.theme(theme)   
-# All the stuff inside your window.
 layout = [[sg.Text("""Welcome to Steam price checker - 
     Type the Game Title to begin or
     Press Quit to Quit""")],
             [sg.Text('Enter Game Title'), sg.InputText(do_not_clear=False, key='title')],
-            [sg.Button('Ok', bind_return_key=True), sg.Button('Cancel'), sg.Button('Previous')] ]
+            [sg.Button('Ok', bind_return_key=True), sg.Button('Cancel'), sg.Button('Previous')] ] 
 
-# Create the Window
 window = sg.Window('Steam Price Checker', layout)
 
-def endgrid():
+def endgrid(): #(Deprecated)
   count = 0
   zount = ''
   tount = ''    
@@ -42,25 +43,25 @@ def endgrid():
     event, values = endlayout.read()
     count = count + 1
     print('test')
+#####################Definitions
 
 
-
+#####################Main Loop
 while True:
   event, values = window.read()
-  if event == sg.WIN_CLOSED or event == 'Cancel':
+  if event == sg.WIN_CLOSED or event == 'Cancel': # Close
     print(inputlist)
     print(imagelist)
     window.close()
-    endgrid()
     break
-  if event == 'Previous':
+  if event == 'Previous': # Previous
     inputurl1 = inputlist[t]
-  if event == 'Ok':
+  if event == 'Ok': # Ok
     t = t + 1
     inputurl1 = (values['title'])
     inputlist.append(inputurl1)
   print(inputurl1)
-  if inputurl1 != ("quit") and inputurl1 != ("Open"):
+  if inputurl1 != ("quit") and inputurl1 != ("Open"): # Quit &
     for url in search(inputurl1 + 'steam', stop=1):
         inputurl = url
     tsm = inputurl;
@@ -73,7 +74,6 @@ while True:
       if index > 0:
         break
     response = requests.get(x)
-    print(x)
     imagelist.append(x)
 
     file = open("image1.png", "wb")

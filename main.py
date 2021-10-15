@@ -62,10 +62,10 @@ while True:
     inputlist.append(inputurl1)
   print(inputurl1)
   if inputurl1 != ("quit") and inputurl1 != ("Open"): # Quit &
-    for url in search(inputurl1 + 'steam', stop=1):
+    for url in search(inputurl1 + 'steam', stop=1): # GOOGLE
         inputurl = url
     tsm = inputurl;
-    htmldata = urlopen(tsm)
+    htmldata = urlopen(tsm) # BS4 Def
     soup = BeautifulSoup(htmldata, 'html.parser')
     images = soup.find_all('img')
     for item in images:
@@ -78,8 +78,9 @@ while True:
 
     file = open("image1.png", "wb")
     file.write(response.content)
-    file.close()
-    page = requests.get(tsm)
+    file.close() # BS4 Def
+
+    page = requests.get(tsm) # BS4 Content
     soup = BeautifulSoup(page.content, "html.parser")
     try:
       try:

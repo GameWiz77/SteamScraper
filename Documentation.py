@@ -55,4 +55,4 @@ event, values - This waits for and records the event that is caused by the main 
 
 ^This code is seperated into two exceptions, if Beautiful Soup cannot find the default price of an item, it will fall into the next exception where it will try to find the discounted price, if it cannot find a discounted price, it will finally land on the print statement ('No game found'). 
 
-
+"""
